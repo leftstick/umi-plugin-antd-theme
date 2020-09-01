@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-dynamic-antd-theme",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "umi@3 plugin with dynamic theme changing ability",
   "contributors": [
     "chenshuai2144 <qixian.cs@outlook.com> (https://github.com/chenshuai2144)",
