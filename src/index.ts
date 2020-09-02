@@ -140,7 +140,7 @@ export default function(api: IApi) {
   api.onDevCompileDone(() => {
     isFirstCompileFinished = false
     if (!needBuildCss) {
-      api.logger.info('skip merge-less since no less variable changed')
+      api.logger.info('skip merge-less since no less files changed')
       return
     }
 
