@@ -120,9 +120,21 @@ export default function(api: IApi) {
   class WebpackPluginForUmiPluginAntdTheme {
     apply(compiler: any) {
       compiler.hooks.watchRun.tapAsync('WebpackPluginForUmiPluginAntdTheme', (_compiler: any, done: any) => {
+        let modifiedFiles: string[] = null
+
         const watchFileSystem = (_compiler as any).watchFileSystem
         const watcher = watchFileSystem.watcher || watchFileSystem.wfs.watcher
-        const lessFiles = Object.keys(watcher.mtimes).filter(fileName => /\.less\b/.test(fileName))
+
+        // webpack4
+        if (watcher.mtimes && Object.keys(watcher.mtimes)) {
+          modifiedFiles = Object.keys(watcher.mtimes)
+        } else if (_compiler.modifiedFiles) {
+          // webpack5
+          modifiedFiles = Array.from(_compiler.modifiedFiles)
+        } else {
+          modifiedFiles = []
+        }
+        const lessFiles = modifiedFiles.filter(fileName => /\.less\b/.test(fileName))
         needBuildCss = isFirstCompileFinished || lessFiles.length > 0
         done()
       })
